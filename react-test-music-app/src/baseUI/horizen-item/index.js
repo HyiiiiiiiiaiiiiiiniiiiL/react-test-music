@@ -26,7 +26,7 @@ export default function Horizen(props){
 {
     list.map((item)=>{
         return (
-        <ListItem key={item.key} className={oldVal===item.key ? 'selected' : '' } onClick={()=>handleClick(item.name)}>{item.name}</ListItem>
+        <ListItem key={item.key} className={oldVal===item.key ? 'selected' : '' } onClick={()=>handleClick(item.key)}>{item.name}</ListItem>
         )
     })
 }

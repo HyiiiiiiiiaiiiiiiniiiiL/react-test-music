@@ -3,7 +3,7 @@ import React ,{useState}from 'react';
 import Horizen from '../../baseUI/horizen-item'
 import {categoryTypes, alphaTypes} from '../../api/config'
 import {NavContainer} from './style'
-function Singers(props) {
+function Singers() {
   let [category,setCategory] = useState('')
   let [alpha,setAlpha] = useState('')
   let handleUpdateAlpha=(val)=>{

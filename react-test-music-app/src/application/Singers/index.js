@@ -1,9 +1,11 @@
 //cSpell:word horizen
-import React ,{useState,useRef,useEffect}from 'react';
+import React ,{useRef,useEffect,useContext}from 'react';
 import Horizen from '../../baseUI/horizen-item'
 import {categoryTypes, alphaTypes} from '../../api/config'
 import {NavContainer} from './style'
 import Scroll  from "../../baseUI/scroll/index"
+import {CategoryDataContext} from './data'
+import { CHANGE_CATEGORY, CHANGE_ALPHA, Data } from './data';
 import {List,ListItem,ListContainer} from  './style.js'
 import {
   getSingerList,
@@ -18,17 +20,19 @@ import {connect} from 'react-redux'
 import { forceCheck } from 'react-lazyload';
 import Loading from '../../baseUI/loading'
 function Singers(props) {
-  const [category,setCategory] = useState('')
-  const [alpha,setAlpha] = useState('')
   const listRef = useRef(null)
+  const {data, dispatch} = useContext(CategoryDataContext);
+  const {category,alpha} = data.toJS()
 
   const {singerList,enterLoading,pullUpLoading,pullDownLoading,pageCount} = props
 
 const {getHotSingerDispatch,updateDispatch,pullDownRefreshDispatch,pullUpRefreshDispatch} = props
 
 useEffect(()=>{
-  getHotSingerDispatch()
-},[getHotSingerDispatch])
+  if(!singerList.size){
+    getHotSingerDispatch()
+  }
+},[getHotSingerDispatch, singerList.size])
 
 const renderSingerList=()=>{
   const list = singerList ? singerList.toJS(): [];
@@ -55,11 +59,11 @@ return(
 
 
   let handleUpdateAlpha=(val)=>{
-    setAlpha(val)
+    dispatch({type: CHANGE_ALPHA, data: val})
     updateDispatch(category,val)
   }
   let handleUpdateCategory = (val)=>{
-    setCategory(val)
+    dispatch({type: CHANGE_CATEGORY, data: val})
     updateDispatch(category,alpha)
   }
   const handlePullUp = () => {

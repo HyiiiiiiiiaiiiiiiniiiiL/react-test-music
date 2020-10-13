@@ -8,7 +8,6 @@ import {List,ListItem,ListContainer} from  './style.js'
 import {
   getSingerList,
   getHotSingerList,
-  changeEnterLoading,
   changePageCount,
   refreshMoreSingerList,
   changePullUpLoading,
@@ -19,8 +18,8 @@ import {connect} from 'react-redux'
 import { forceCheck } from 'react-lazyload';
 import Loading from '../../baseUI/loading'
 function Singers(props) {
-  let [category,setCategory] = useState('')
-  let [alpha,setAlpha] = useState('')
+  const [category,setCategory] = useState('')
+  const [alpha,setAlpha] = useState('')
   const listRef = useRef(null)
 
   const {singerList,enterLoading,pullUpLoading,pullDownLoading,pageCount} = props
@@ -97,11 +96,11 @@ const mapDispatchToProps=(dispatch)=>{
     getHotSingerDispatch(){
       dispatch(getHotSingerList())
     },
-    updateDispatch(category,alpha){
+    updateDispatch(alpha){
       dispatch(changePageCount(0));
       dispatch(getSingerList(alpha));
     },
-    pullUpRefreshDispatch(category,alpha,hot,count){
+    pullUpRefreshDispatch(alpha,hot,count){
       dispatch(changePullUpLoading(true))
       dispatch(changePageCount(count+1))
       if(hot){

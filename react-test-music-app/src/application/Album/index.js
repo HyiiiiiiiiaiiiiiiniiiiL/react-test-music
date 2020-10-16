@@ -1,9 +1,11 @@
-import React,{useState} from 'react'
-import {Container} from './style'
+import React,{useState,useRef} from 'react'
+import {Container, SongItem} from './style'
 import {CSSTransition} from 'react-transition-group'
 import Header from '../../baseUI/header'
 import Scroll from '../../baseUI/scroll/index'
-import {TopDesc,Menu} from './style.js'
+import {getName,getCount} from '../../api/utils'
+import {TopDesc,Menu,SongList} from './style.js'
+import style from '../../assets/global-style'
 
 const currentAlbum = {
     creator: {
@@ -86,12 +88,32 @@ const currentAlbum = {
       },
     ]
   }
-
+  export const HEADER_HEIGHT = 45;
 function Album(props){
     const [showStatus,setShowStatus] = useState(true)
+    const [title,setTitle] = useState("歌单")
+    const [isMarquee,setIsMarquee] = useState(false)
+    const headerEl = useRef()
 
     const handleBack=()=>{
         setShowStatus(false)
+    }
+    const handleScroll=(pos)=>{
+      let minScrollY = -HEADER_HEIGHT
+      let percent = Math.abs(pos.y/minScrollY)
+      let headerDom = headerEl.current
+
+      if (pos.y < minScrollY) {
+        headerDom.style.backgroundColor = style["theme-color"];
+        headerDom.style.opacity = Math.min (1, (percent-1)/2);
+        setTitle (currentAlbum.name);
+        setIsMarquee (true);
+      } else {
+        headerDom.style.backgroundColor = "";
+        headerDom.style.opacity = 1;
+        setTitle ("歌单");
+        setIsMarquee (false);
+      }
     }
     return <CSSTransition
     in={showStatus}
@@ -102,8 +124,8 @@ function Album(props){
     onExited={props.history.goBack}
     >
          <Container>
-        <Header title="返回"  handleClick={handleBack}/>
-        <Scroll bounceTop={false}>
+        <Header  ref={headerEl} title={title} isMarquee={isMarquee}  handleClick={handleBack}/>
+        <Scroll bounceTop={false} onScroll={handleScroll}>
         <div>
     <TopDesc background={currentAlbum.coverImgUrl}>
       <div className="background">
@@ -145,6 +167,31 @@ function Album(props){
         更多
       </div>
     </Menu>
+    <SongList>
+      <div className="first_line">
+        <div className="play_all">
+          <i className="iconfont">&#xe6e3;</i>
+          <span > 播放全部 <span className="sum">(共 {currentAlbum.tracks.length} 首)</span></span>
+        </div>
+        <div className="add_list">
+        <i className="iconfont">&#xe62d;</i>
+      <span > 收藏 ({getCount (currentAlbum.subscribedCount)})</span>
+        </div>
+      </div>
+      <SongItem>
+        {
+          currentAlbum.tracks.map((item,index)=>{
+            return <li key={index}>
+              <span className="index">{index+1}</span>
+              <div className="info">
+                <span>{item.name}</span>
+                <span>{ getName (item.ar) } - { item.al.name }</span>
+              </div>
+            </li>
+          })
+        }
+      </SongItem>
+    </SongList>
   </div>
         </Scroll>
     </Container>

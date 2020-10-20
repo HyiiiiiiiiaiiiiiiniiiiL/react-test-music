@@ -1,11 +1,13 @@
 //cSpell:word horizen
 import React ,{useRef,useEffect,useContext}from 'react';
 import Horizen from '../../baseUI/horizen-item'
+
+import {renderRoutes} from 'react-router-config'
 import {categoryTypes, alphaTypes} from '../../api/config'
 import {NavContainer} from './style'
 import Scroll  from "../../baseUI/scroll/index"
 import {CategoryDataContext} from './data'
-import { CHANGE_CATEGORY, CHANGE_ALPHA, Data } from './data';
+import { CHANGE_CATEGORY, CHANGE_ALPHA} from './data';
 import {List,ListItem,ListContainer} from  './style.js'
 import {
   getSingerList,
@@ -28,6 +30,10 @@ function Singers(props) {
 
 const {getHotSingerDispatch,updateDispatch,pullDownRefreshDispatch,pullUpRefreshDispatch} = props
 
+const enterDetail=(id)=>{
+  props.history.push(`/singers/${id}`)
+}
+
 useEffect(()=>{
   if(!singerList.size){
     getHotSingerDispatch()
@@ -42,7 +48,7 @@ return(
     {
         list.map ((item, index) => {
           return (
-            <ListItem key={item.accountId+""+index}>
+            <ListItem key={item.accountId+""+index} onClick={()=>enterDetail(item.id)}>
               <div className="img_wrapper">
                 <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music"/>
               </div>
@@ -83,6 +89,7 @@ return(
       </Scroll>
       <Loading show={enterLoading}></Loading>
     </ListContainer>
+    {renderRoutes(props.route.routes)}
     </NavContainer>
   )
 }

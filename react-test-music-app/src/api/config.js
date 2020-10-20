@@ -4,6 +4,12 @@ export const baseUrl = 'http://192.168.1.189:3300';
 
 export const HEADER_HEIGHT = 45
 
+export const playMode={
+  sequence:0,
+  loop:1,
+  random:2
+}
+
 // axios的实例及拦截器配置
 const axiosInstance = axios.create({
   baseURL: baseUrl

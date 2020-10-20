@@ -2,6 +2,8 @@ import axios from 'axios';
 
 export const baseUrl = 'http://192.168.1.189:3300';
 
+export const HEADER_HEIGHT = 45
+
 // axios的实例及拦截器配置
 const axiosInstance = axios.create({
   baseURL: baseUrl

@@ -4,8 +4,7 @@ import style from '../../assets/global-style'
 export const SongListContainer = styled.div`
   border-radius: 10px;
   opacity: 0.98;
-  // 注意在这里背景改为自配置参数控制
-  ${props => props.showBackground ? `background: ${style["highlight-background-color"]}`: ""}
+  ${props => props.showBackground ? `background: ${style["highlight-background-color"]};`: ""}
   .first_line {
     box-sizing: border-box;
     padding: 10px 0;
@@ -34,7 +33,9 @@ export const SongListContainer = styled.div`
       display: flex;
       align-items: center;
       position: absolute;
-      right: 0; top :0; bottom: 0;
+      right: 0;
+      top :0;
+      bottom: 0;
       width: 130px;
       line-height: 34px;
       background: ${style["theme-color"]};

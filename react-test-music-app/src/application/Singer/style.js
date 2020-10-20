@@ -8,29 +8,26 @@ position:fixed;
 top:0;
 left:0;
 right:0;
-bottom:${props=>props.play>0?"60px":0};
+bottom:${props=>props.play >0 ? "60px":0};
 overflow:hidden;
 background: #f2f3f4;
 transform-origin: right bottom;
   &.fly-enter, &.fly-appear {
-    transform: rotateZ (30deg) translate3d (100%, 0, 0);
+    transform: rotateZ(30deg) translate3d(100%, 0, 0);
   }
   &.fly-enter-active, &.fly-appear-active {
     transition: transform .3s;
-    transform: rotateZ (0deg) translate3d (0, 0, 0);
+    transform: rotateZ(0deg) translate3d(0, 0, 0);
   }
   &.fly-exit {
-    transform: rotateZ (0deg) translate3d (0, 0, 0);
+    transform: rotateZ(0deg) translate3d(0, 0, 0);
   }
   &.fly-exit-active {
     transition: transform .3s;
-    transform: rotateZ (30deg) translate3d (100%, 0, 0);
+    transform: rotateZ(30deg) translate3d(100%, 0, 0);
   }
 `
 
-export const Header=styled.div`
-width:100%;
-`
 
 export const ImgWrapper = styled.div`
 width:100%;
@@ -54,12 +51,12 @@ z-index:50;
 export const CollectButton = styled.div`
 width:120px;
 height:40px;
-margin-top:-55px;
 z-index:50;
 position:absolute;
 left:0;
 right:0;
-margin:auto;
+margin:0 auto;
+margin-top:-55px;
 box-sizing:border-box;
 background:${style["theme-color"]};
 color:${style["font-color-light"]};
